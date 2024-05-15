@@ -2,13 +2,14 @@
 #include <unistd.h>
 using namespace std;
 
-
 // Function declaration.
 void takingGeysName(string * pPlayerName);
 void mainMenu(int * pMainMenuChoise);
+char askingForPlayerAviator();
 
 int main() {
     int mainMenuChoise;
+    char playerAviator;
     string playerName = "Not defined";
 
     // Printing main menu and asking choise.
@@ -21,8 +22,10 @@ int main() {
         cout << " Nice, The let's start the Game! 🎮";
         cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-        // Taking the geys name.
+        // Taking the geys info.
         takingGeysName(&playerName);
+        playerAviator = askingForPlayerAviator();
+        cout << "Grate You Chouse is '" << playerAviator << "'.";
 
         break;
 
@@ -66,4 +69,19 @@ void mainMenu(int * pMainMenuChoise) {
 
     cout << "Enter You Choice 🤔 : ";
     cin >> ws >> *pMainMenuChoise;
+}
+
+char askingForPlayerAviator() {
+    char userAviatorChoise;
+    cout << "Witch Aviator woud you like to play as, 'X' or 'O' Caracator?" << endl;
+    cout << "Enter 'X/x' 'O/o' : ";
+    cin >> ws >> userAviatorChoise;
+
+    while (userAviatorChoise != 'x' && userAviatorChoise != 'X' && userAviatorChoise != 'o' && userAviatorChoise != 'O') {
+        cout << "Pleas Enter A corract choise!" << endl;
+        cout << "Enter 'X/x' 'O/o' : ";
+        cin >> ws >> userAviatorChoise;
+    }
+
+    return userAviatorChoise;
 }
