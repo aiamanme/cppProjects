@@ -1,87 +1,86 @@
-#include <iostream> 
+#include <iostream>
 #include <unistd.h>
 using namespace std;
 
 // Function declaration.
-void takingGeysName(string * pPlayerName);
-void mainMenu(int * pMainMenuChoise);
-char askingForPlayerAviator();
+void getPlayerName(string* pPlayerName);
+void displayMainMenu(int* pMainMenuChoice);
+char getPlayerAvatar();
 
 int main() {
-    int mainMenuChoise;
-    char playerAviator;
+    // Variable declaration
+    int mainMenuChoice;
+    char playerAvatar;
     string playerName = "Not defined";
 
-    // Printing main menu and asking choise.
-    mainMenu(&mainMenuChoise);
+    // Displaying main menu and asking choice.
+    displayMainMenu(&mainMenuChoice);
 
-    switch (mainMenuChoise)
-    {
+    switch (mainMenuChoice) {
     case 1:
         cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-        cout << " Nice, The let's start the Game! 🎮";
+        cout << " Nice, let's start the game! 🎮";
         cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-        // Taking the geys info.
-        takingGeysName(&playerName);
-        playerAviator = askingForPlayerAviator();
-        cout << "Grate You Chouse is '" << playerAviator << "'.";
-
+        // Getting the player's info.
+        getPlayerName(&playerName);
+        playerAvatar = getPlayerAvatar();
+        cout << "Great! Your choice is '" << playerAvatar << "'." << endl;
         break;
 
-    case 2: 
-        cout << "Instruction of game ha? Well let me tell you something!\n 'Thear are not instruction' 😂" << endl;
+    case 2:
+        cout << "Instructions for the game? Well, let me tell you something!\n 'There are no instructions' 😂" << endl;
         break;
 
     case 3:
-        cout << "Then Bye-Bye 👋" << endl;
+        cout << "Goodbye 👋" << endl;
         break;
-    
+
     default:
-        cout << "Sir, Pleas enter a correct! \n" << endl;
+        cout << "Please enter a correct choice! \n" << endl;
         main();
         break;
     }
     return 0;
 }
 
-void takingGeysName(string * pPlayerName) {
-        cout << "Before the can i get to know 'you name?' : ";
-        cin >> ws >> *pPlayerName;
+void getPlayerName(string* pPlayerName) {
+    cout << "Before we start, can I get to know your name? : ";
+    cin >> ws >> *pPlayerName;
 
-        while ( *pPlayerName == "Ai" || *pPlayerName == "AI" || *pPlayerName == "ai" || *pPlayerName == "aI" ) {
-            cout << "Sorry bro my name is 'Ai', You can't take my name!" << endl;
-            cout << "Enter again! : ";
-            cin >> *pPlayerName;
-        };
-        
-        cout << "Hello " << *pPlayerName << ", welcome to the game!" << endl;
+    while (*pPlayerName == "Ai" || *pPlayerName == "AI" || *pPlayerName == "ai" || *pPlayerName == "aI") {
+        cout << "Sorry, my name is 'AI'. You can't use my name!" << endl;
+        cout << "Enter again: ";
+        cin >> *pPlayerName;
+    };
+
+    cout << "Hello " << *pPlayerName << ", welcome to the game!" << endl;
 }
 
-void mainMenu(int * pMainMenuChoise) {
+void displayMainMenu(int* pMainMenuChoice) {
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << " 🎊 This is main menu of the game! 🎉" << endl;
+    cout << " 🎊 Welcome to the main menu of the game! 🎉" << endl;
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-    cout << "Choice one of the following 😇 :" << endl;
-    cout << "1. 🎲 | Enter the game. " << endl; 
-    cout << "2. 📜 | Instruction for the game. " << endl;
-    cout << "3. 🗿 | Exit from Game. \n" << endl; 
+    cout << "Choose one of the following options 😇 :" << endl;
+    cout << "1. 🎲 | Enter the game." << endl;
+    cout << "2. 📜 | Instructions for the game." << endl;
+    cout << "3. 🗿 | Exit from the game. \n" << endl;
 
-    cout << "Enter You Choice 🤔 : ";
-    cin >> ws >> *pMainMenuChoise;
+    cout << "Enter your choice 🤔 : ";
+    cin >> ws >> *pMainMenuChoice;
 }
 
-char askingForPlayerAviator() {
-    char userAviatorChoise;
-    cout << "Witch Aviator woud you like to play as, 'X' or 'O' Caracator?" << endl;
-    cout << "Enter 'X/x' 'O/o' : ";
-    cin >> ws >> userAviatorChoise;
+char getPlayerAvatar() {
+    char userAvatarChoice;
+    cout << "Which avatar would you like to play as, 'X' or 'O' character?" << endl;
+    cout << "Enter 'X/x' or 'O/o': ";
+    cin >> ws >> userAvatarChoice;
 
-    while (userAviatorChoise != 'x' && userAviatorChoise != 'X' && userAviatorChoise != 'o' && userAviatorChoise != 'O') {
-        cout << "Pleas Enter A corract choise!" << endl;
-        cout << "Enter 'X/x' 'O/o' : ";
-        cin >> ws >> userAviatorChoise;
+    while (userAvatarChoice != 'x' && userAvatarChoice != 'X' && userAvatarChoice != 'o' && userAvatarChoice != 'O') {
+        cout << "Please enter a correct choice!" << endl;
+        cout << "Enter 'X/x' or 'O/o': ";
+        cin >> ws >> userAvatarChoice;
     }
 
-    return userAviatorChoise;
+    return userAvatarChoice;
 }
