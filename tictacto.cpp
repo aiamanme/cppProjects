@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <unistd.h>
 using namespace std;
 
@@ -14,6 +16,7 @@ int main()
     string gameBord[3][3] = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
     bool lineFound = false;
     char playerAvatar;
+    char computerAvatar;
     string playerName = "Not defined";
 
     // Displaying main menu and asking choice.
@@ -30,10 +33,18 @@ int main()
         getPlayerName(&playerName);
         playerAvatar = getPlayerAvatar();
         cout << "Great! Your choice is '" << playerAvatar << "'." << endl;
-
+        if (playerAvatar == 'x' || playerAvatar == 'X') {
+            computerAvatar = 'o';
+        } else {
+            computerAvatar = 'x';
+        }
         // Main gameplay.
         do
         {
+            srand(time(0));
+            int random_number_colom = rand() % 3;
+            srand(time(0)+1);
+            int random_number_row = rand() % 3;
             int playerCoordinates[2];
             // Drowing game bord.
             for (int r = 0; r <= 2; r++)
@@ -72,11 +83,26 @@ int main()
                  << endl;
 
             // sitting pleayr's character on board.
-            if (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ") {
-                cout << "Sorry, but there's already an avatar there." << endl;
-            } else {
-                gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
-            }
+            while (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ") {
+                cout << "Sorry, but there's already an avatar there.\nPlease Enter different Coordinates. \n" << endl;
+                cout << "Enter number of row: ";
+                cin >> playerCoordinates[0];
+                cout << "Enter number of column: ";
+                cin >> playerCoordinates[1];
+                cout << "\n"
+                    << endl;
+            };
+            gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
+            // computer's turn
+            
+            do {
+                srand(time(0));
+                random_number_colom = rand() % 3;
+                srand(time(0)+1);
+                random_number_row = rand() % 3;
+            } while (gameBord[random_number_row][random_number_colom] != " ");
+            gameBord[random_number_row][random_number_colom] = computerAvatar;            
+
 
         } while (lineFound == false);
 
