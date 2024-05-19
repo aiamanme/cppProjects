@@ -72,7 +72,11 @@ int main()
                  << endl;
 
             // sitting pleayr's character on board.
-            gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
+            if (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ") {
+                cout << "Sorry, but there's already an avatar there." << endl;
+            } else {
+                gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
+            }
 
         } while (lineFound == false);
 
