@@ -5,7 +5,6 @@
 using namespace std;
 
 // Function declaration.
-void getPlayerName(string *pPlayerName);
 void displayMainMenu(int *pMainMenuChoice);
 char getPlayerAvatar();
 
@@ -17,7 +16,6 @@ int main()
     bool lineFound = false;
     char playerAvatar;
     char computerAvatar;
-    string playerName = "Not defined";
 
     // Displaying main menu and asking choice.
     displayMainMenu(&mainMenuChoice);
@@ -30,7 +28,6 @@ int main()
         cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
         // Getting the player's info.
-        getPlayerName(&playerName);
         playerAvatar = getPlayerAvatar();
         cout << "Great! Your choice is '" << playerAvatar << "'." << endl;
         if (playerAvatar == 'x' || playerAvatar == 'X') {
@@ -103,7 +100,10 @@ int main()
             } while (gameBord[random_number_row][random_number_colom] != " ");
             gameBord[random_number_row][random_number_colom] = computerAvatar;            
 
+            //**** Decide the winner of the game ****//
+            bool lineInRow;
 
+            
         } while (lineFound == false);
 
         break;
@@ -123,21 +123,6 @@ int main()
         break;
     }
     return 0;
-}
-
-void getPlayerName(string *pPlayerName)
-{
-    cout << "Before we start, can I get to know your name? : ";
-    cin >> ws >> *pPlayerName;
-
-    while (*pPlayerName == "Ai" || *pPlayerName == "AI" || *pPlayerName == "ai" || *pPlayerName == "aI")
-    {
-        cout << "Sorry, my name is 'AI'. You can't use my name!" << endl;
-        cout << "Enter again: ";
-        cin >> *pPlayerName;
-    };
-
-    cout << "Hello " << *pPlayerName << ", welcome to the game!" << endl;
 }
 
 void displayMainMenu(int *pMainMenuChoice)
