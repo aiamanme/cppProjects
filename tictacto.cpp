@@ -111,30 +111,46 @@ int main()
             gameBord[random_number_row][random_number_colom] = computerAvatar;
 
             //**** Decide the winner of the game ****//
-            bool lineInRow;
-
             if (gameBord[0][0] == gameBord[0][1] && gameBord[0][1] == gameBord[0][2] && gameBord[0][0] != " ")
             {
-                lineInRow = true;
+                lineFound = true;
                 winer = gameBord[0][0];
-            }
-            lineInRow == true ? lineFound = true : lineFound = false;
-            if (gameBord[1][0] == gameBord[1][1] && gameBord[1][1] == gameBord[1][2] && gameBord[1][0] != " ")
+            } else if (gameBord[1][0] == gameBord[1][1] && gameBord[1][1] == gameBord[1][2] && gameBord[1][0] != " ")
             {
-                lineInRow = true;
+                lineFound = true;
                 winer = gameBord[0][0];
-            }
-            lineInRow == true ? lineFound = true : lineFound = false;
-            if (gameBord[2][0] == gameBord[2][1] && gameBord[2][1] == gameBord[2][2] && gameBord[2][0] != " ")
+            } else if (gameBord[2][0] == gameBord[2][1] && gameBord[2][1] == gameBord[2][2] && gameBord[2][0] != " ")
             {
-                lineInRow = true;
+                lineFound = true;
                 winer = gameBord[2][0];
+            } else if (gameBord[0][0] == gameBord[1][0] && gameBord[1][0] == gameBord[2][0] && gameBord[0][0] != " ")
+            {
+                lineFound = true;
+                winer = gameBord[0][0];
+            } else if (gameBord[0][1] == gameBord[1][1] && gameBord[1][1] == gameBord[2][1] && gameBord[0][1] != " ")
+            {
+                lineFound = true;
+                winer = gameBord[0][1];
+            } else if (gameBord[0][2] == gameBord[1][2] && gameBord[1][2] == gameBord[2][2] && gameBord[0][2] != " ")
+            {
+                lineFound = true;
+                winer = gameBord[0][2];
+            } else if (gameBord[0][0] == gameBord[1][1] && gameBord[1][1] == gameBord[2][2] && gameBord[0][0] != " ")
+            {
+                lineFound = true;
+                winer = gameBord[0][0];
+            } else if (gameBord[0][2] == gameBord[1][1] && gameBord[1][1] == gameBord[2][0] && gameBord[0][0] != " ")
+            {
+                lineFound = true;
+                winer = gameBord[0][2];
+            } else {
+                continue;
             }
-            lineInRow == true ? lineFound = true : lineFound = false;
 
         } while (lineFound == false);
 
         cout << "Game end!\nWiner is " << winer << endl;
+        
         break;
 
     case 2:
