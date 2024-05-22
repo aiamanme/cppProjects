@@ -16,6 +16,7 @@ int main()
     bool lineFound = false;
     char playerAvatar;
     char computerAvatar;
+    string winer;
 
     // Displaying main menu and asking choice.
     displayMainMenu(&mainMenuChoice);
@@ -29,18 +30,24 @@ int main()
 
         // Getting the player's info.
         playerAvatar = getPlayerAvatar();
+
+        // computer Avatar setting.
         cout << "Great! Your choice is '" << playerAvatar << "'." << endl;
-        if (playerAvatar == 'x' || playerAvatar == 'X') {
+        if (playerAvatar == 'x' || playerAvatar == 'X')
+        {
             computerAvatar = 'o';
-        } else {
+        }
+        else
+        {
             computerAvatar = 'x';
         }
+
         // Main gameplay.
         do
         {
             srand(time(0));
             int random_number_colom = rand() % 3;
-            srand(time(0)+1);
+            srand(time(0) + 1);
             int random_number_row = rand() % 3;
             int playerCoordinates[2];
             // Drowing game bord.
@@ -80,32 +87,54 @@ int main()
                  << endl;
 
             // sitting pleayr's character on board.
-            while (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ") {
-                cout << "Sorry, but there's already an avatar there.\nPlease Enter different Coordinates. \n" << endl;
+            while (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ")
+            {
+                cout << "Sorry, but there's already an avatar there.\nPlease Enter different Coordinates. \n"
+                     << endl;
                 cout << "Enter number of row: ";
                 cin >> playerCoordinates[0];
                 cout << "Enter number of column: ";
                 cin >> playerCoordinates[1];
                 cout << "\n"
-                    << endl;
+                     << endl;
             };
             gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
             // computer's turn
-            
-            do {
+
+            do
+            {
                 srand(time(0));
                 random_number_colom = rand() % 3;
-                srand(time(0)+1);
+                srand(time(0) + 1);
                 random_number_row = rand() % 3;
             } while (gameBord[random_number_row][random_number_colom] != " ");
-            gameBord[random_number_row][random_number_colom] = computerAvatar;            
+            gameBord[random_number_row][random_number_colom] = computerAvatar;
 
             //**** Decide the winner of the game ****//
             bool lineInRow;
 
-            
+            if (gameBord[0][0] == gameBord[0][1] && gameBord[0][1] == gameBord[0][2] && gameBord[0][0] != " ")
+            {
+                lineInRow = true;
+                winer = gameBord[0][0];
+            }
+            lineInRow == true ? lineFound = true : lineFound = false;
+            if (gameBord[1][0] == gameBord[1][1] && gameBord[1][1] == gameBord[1][2] && gameBord[1][0] != " ")
+            {
+                lineInRow = true;
+                winer = gameBord[0][0];
+            }
+            lineInRow == true ? lineFound = true : lineFound = false;
+            if (gameBord[2][0] == gameBord[2][1] && gameBord[2][1] == gameBord[2][2] && gameBord[2][0] != " ")
+            {
+                lineInRow = true;
+                winer = gameBord[2][0];
+            }
+            lineInRow == true ? lineFound = true : lineFound = false;
+
         } while (lineFound == false);
 
+        cout << "Game end!\nWiner is " << winer << endl;
         break;
 
     case 2:
