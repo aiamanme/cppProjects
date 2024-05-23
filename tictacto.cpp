@@ -4,19 +4,22 @@
 #include <unistd.h>
 using namespace std;
 
+// Function prototypes
 void displayMainMenu(int *pMainMenuChoice);
+void drawGameBoard(string gameBoard[3][3]);
 char getPlayerAvatar();
+bool isLineFound(string *pWinner, string gameBoard[3][3]);
 
 int main()
 {
     int mainMenuChoice;
-    string gameBord[3][3] = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
-    bool lineFound = false;
-    char playerAvatar;
-    char computerAvatar;
-    string winer;
+    string gameBoard[3][3] = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}}; // Initialize game board
+    bool lineFound = false; // Flag to check if a winning line is found
+    char playerAvatar; // Player's avatar ('X' or 'O')
+    char computerAvatar; // Computer's avatar ('X' or 'O')
+    string winner; // Winner of the game
 
-    displayMainMenu(&mainMenuChoice);
+    displayMainMenu(&mainMenuChoice); // Display main menu and get user's choice
 
     switch (mainMenuChoice)
     {
@@ -25,9 +28,10 @@ int main()
         cout << " Nice, let's start the game! 🎮";
         cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-        playerAvatar = getPlayerAvatar();
+        playerAvatar = getPlayerAvatar(); // Get player's avatar choice
 
         cout << "Great! Your choice is '" << playerAvatar << "'." << endl;
+        // Assign computer's avatar based on player's choice
         if (playerAvatar == 'x' || playerAvatar == 'X')
         {
             computerAvatar = 'o';
@@ -39,39 +43,15 @@ int main()
 
         do
         {
-            srand(time(0));
-            int random_number_colom = rand() % 3;
-            srand(time(0) + 1);
-            int random_number_row = rand() % 3;
-            int playerCoordinates[2];
-            // Drowing game bord.
-            for (int r = 0; r <= 2; r++)
-            {
-                for (int c = 0; c <= 2; c++)
-                {
-                    if (c == 2)
-                    {
-                        cout << gameBord[r][c] << " ";
-                    }
-                    else
-                    {
+            srand(time(0)); // Seed the random number generator
+            int random_number_col = rand() % 3; // Generate random column for computer move
+            srand(time(0) + 1); // Seed the random number generator again
+            int random_number_row = rand() % 3; // Generate random row for computer move
+            int playerCoordinates[2]; // Player's move coordinates
 
-                        cout << gameBord[r][c] << " | ";
-                    }
-                    if (c == 2)
-                    {
-                        if (r != 2)
-                        {
-                            cout << "\n----------";
-                            cout << '\n';
-                        }
-                        else
-                        {
-                            cout << '\n';
-                        }
-                    }
-                }
-            };
+            drawGameBoard(gameBoard); // Draw the current game board
+
+            // Get player's move
             cout << "Enter number of row: ";
             cin >> playerCoordinates[0];
             cout << "Enter number of column: ";
@@ -79,9 +59,10 @@ int main()
             cout << "\n"
                  << endl;
 
-            while (gameBord[playerCoordinates[0]][playerCoordinates[1]] != " ")
+            // Check if the chosen cell is empty
+            while (gameBoard[playerCoordinates[0]][playerCoordinates[1]] != " ")
             {
-                cout << "Sorry, but there's already an avatar there.\nPlease Enter different Coordinates. \n"
+                cout << "Sorry, but there's already an avatar there.\nPlease enter different coordinates. \n"
                      << endl;
                 cout << "Enter number of row: ";
                 cin >> playerCoordinates[0];
@@ -89,63 +70,24 @@ int main()
                 cin >> playerCoordinates[1];
                 cout << "\n"
                      << endl;
-            };
-            gameBord[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar;
+            }
+            gameBoard[playerCoordinates[0]][playerCoordinates[1]] = playerAvatar; // Update board with player's move
 
+            // Generate computer's move
             do
             {
                 srand(time(0));
-                random_number_colom = rand() % 3;
+                random_number_col = rand() % 3;
                 srand(time(0) + 1);
                 random_number_row = rand() % 3;
-            } while (gameBord[random_number_row][random_number_colom] != " ");
-            gameBord[random_number_row][random_number_colom] = computerAvatar;
+            } while (gameBoard[random_number_row][random_number_col] != " "); // Ensure computer's move is on an empty cell
+            gameBoard[random_number_row][random_number_col] = computerAvatar; // Update board with computer's move
 
-            for (int a = 0; a <= 2; a++)
-            {
-                if (gameBord[a][0] == gameBord[a][1] && gameBord[a][1] == gameBord[a][2] && gameBord[a][0] != " ")
-                {
-                    lineFound = true;
-                    winer = gameBord[0][0];
-                }
-                else
-                {
-                    continue;
-                }
-            }
+            lineFound = isLineFound(&winner, gameBoard);
 
-            for (int a = 0; a <= 2; a++)
-            {
-                if (gameBord[0][a] == gameBord[1][a] && gameBord[1][a] == gameBord[2][a] && gameBord[0][a] != " ")
-                {
-                    lineFound = true;
-                    winer = gameBord[0][0];
-                }
-                else
-                {
-                    continue;
-                }
-            }
+        } while (!lineFound); // Repeat until a winning line is found
 
-            if (gameBord[0][0] == gameBord[1][1] && gameBord[1][1] == gameBord[2][2] && gameBord[0][0] != " ")
-            {
-                lineFound = true;
-                winer = gameBord[0][0];
-            }
-            else if (gameBord[0][2] == gameBord[1][1] && gameBord[1][1] == gameBord[2][0] && gameBord[0][0] != " ")
-            {
-                lineFound = true;
-                winer = gameBord[0][2];
-            }
-            else
-            {
-                continue;
-            }
-
-        } while (lineFound == false);
-
-        cout << "Game end!\nWiner is " << winer << endl;
-
+        cout << "Game over!\nWinner is " << winner << endl; // Display the winner
         break;
 
     case 2:
@@ -159,12 +101,13 @@ int main()
     default:
         cout << "Please enter a correct choice! \n"
              << endl;
-        main();
+        main(); // Restart the game if an invalid choice is entered
         break;
     }
     return 0;
 }
 
+// Function to display the main menu and get user's choice
 void displayMainMenu(int *pMainMenuChoice)
 {
     cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
@@ -180,6 +123,7 @@ void displayMainMenu(int *pMainMenuChoice)
     cin >> ws >> *pMainMenuChoice;
 }
 
+// Function to get player's avatar choice ('X' or 'O')
 char getPlayerAvatar()
 {
     char userAvatarChoice;
@@ -187,6 +131,7 @@ char getPlayerAvatar()
     cout << "Enter 'X/x' or 'O/o': ";
     cin >> ws >> userAvatarChoice;
 
+    // Validate user's avatar choice
     while (userAvatarChoice != 'x' && userAvatarChoice != 'X' && userAvatarChoice != 'o' && userAvatarChoice != 'O')
     {
         cout << "Please enter a correct choice!" << endl;
@@ -195,4 +140,70 @@ char getPlayerAvatar()
     }
 
     return userAvatarChoice;
+}
+
+// Function to draw the game board
+void drawGameBoard(string gameBoard[3][3])
+{
+    for (int r = 0; r <= 2; r++)
+    {
+        for (int c = 0; c <= 2; c++)
+        {
+            if (c == 2)
+            {
+                cout << gameBoard[r][c] << " ";
+            }
+            else
+            {
+                cout << gameBoard[r][c] << " | ";
+            }
+            if (c == 2)
+            {
+                if (r != 2)
+                {
+                    cout << "\n----------";
+                    cout << '\n';
+                }
+                else
+                {
+                    cout << '\n';
+                }
+            }
+        }
+    }
+}
+
+bool isLineFound(string *pWinner, string gameBoard[3][3]) {
+
+            // Check for a winning line in columns and rows
+            for (int i = 0; i <= 2; i++)
+            {
+                if (gameBoard[0][i] == gameBoard[1][i] && gameBoard[1][i] == gameBoard[2][i] && gameBoard[0][i] != " ")
+                {
+                    return true;
+                    *pWinner = gameBoard[0][i];
+                } else if (gameBoard[i][0] == gameBoard[i][1] && gameBoard[i][1] == gameBoard[i][2] && gameBoard[i][0] != " ")
+                {
+                    return true;
+                    *pWinner = gameBoard[i][0];
+                } else {
+                    return false;
+                    continue;
+                }
+            }
+
+            // Check diagonals for a winning line
+            if (gameBoard[0][0] == gameBoard[1][1] && gameBoard[1][1] == gameBoard[2][2] && gameBoard[0][0] != " ")
+            {
+                return true;
+                *pWinner = gameBoard[0][0];
+            }
+            else if (gameBoard[0][2] == gameBoard[1][1] && gameBoard[1][1] == gameBoard[2][0] && gameBoard[0][2] != " ")
+            {
+                return true;
+                *pWinner = gameBoard[0][2];
+            }
+            else {
+                return false;
+            }
 }
